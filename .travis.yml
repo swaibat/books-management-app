@@ -1,0 +1,21 @@
+services:
+  - postgresql
+addons:
+  postgresql: "9.6"
+language: node_js
+node_js:
+  - "10"
+install:
+  - npm install
+cache:
+  directories:
+    - node_modules
+before_script:
+  - psql -c 'CREATE DATABASE bookapp_test;' -U postgres
+  - npm run db-migrate:test
+script:
+  - npm test
+after_success:
+  - npm run coveralls
+notifications:
+  email:       false
