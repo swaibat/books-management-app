@@ -2,25 +2,20 @@ services:
   - postgresql
 addons:
   postgresql: "9.6"
-env:
-  global:
-    - PRIVATE_KEY=kjefw373784
 language: node_js
 node_js:
   - "10"
-branches:
-  only:
-    - master
 install:
   - npm install
 cache:
   directories:
     - node_modules
 before_script:
-  - psql -c 'drop database if exists bookapp_test;' -U postgres
-  - psql -c 'create database bookapp_test;' -U postgres
+  - psql -c 'CREATE DATABASE bookapp_test;' -U postgres
   - npm run db-migrate:test
 script:
   - npm test
 after_success:
   - npm run coveralls
+notifications:
+  email:       false
