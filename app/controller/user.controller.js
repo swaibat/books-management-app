@@ -10,13 +10,13 @@ const User = {
       username
     });
     delete user.dataValues.password;
-    res.status(201).send({status:201,data:user.dataValues})
+    res.status(201).send({ status: 201, data: user.dataValues });
   },
 
   async login(req, res) {
     const data = helpers.createToken(req.user);
-    res.status(201).send({status:201,data})
+    res.status(200).send({ status: 200,message:'login successful', data });
   }
-}
+};
 
 export default User;

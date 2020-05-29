@@ -8,27 +8,21 @@
       "@babel/register",
       "@babel/polyfill"
     ],
-    "reporter": [
-      "lcov",
-      "text"
-    ],
     "exclude": [
       "**/**/**/index.js"
-    ],
-    "sourceMap": false,
-    "instrument": false
+    ]
   },
   "scripts": {
     "start": "babel-node index.js",
     "dev": "nodemon --exec babel-node index.js",
-    "test": "npm run db-migrate:test && npm run db-seeder:test && nyc --reporter=html --reporter=text --reporter=lcov ./node_modules/.bin/mocha  ./tests/* --require @babel/register --timeout 600000 --exit",
+    "test": "npm run db-migrate:test && npm run db-seeder:test && nyc mocha  --timeout 200000 --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "db-migrate": "sequelize db:migrate --env production",
     "db-migrate:dev": "sequelize db:migrate --env development",
     "db-seeder:dev": "sequelize db:seed:all --env development",
     "db-seeder:test": "sequelize db:seed:all --env test",
     "db-delete:dev": "sequelize db:migrate:undo:all --env development",
-    "db-migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test"
+    "db-migrate:test": "sequelize db:migrate:undo:all --env development && sequelize db:migrate --env development"
   },
   "author": "",
   "license": "ISC",
@@ -41,6 +35,7 @@
     "@babel/register": "^7.9.0",
     "bcrypt": "^4.0.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "jsonwebtoken": "^8.5.1",
@@ -55,6 +50,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.1.0",
+    "babel-plugin-istanbul": "^5.2.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
