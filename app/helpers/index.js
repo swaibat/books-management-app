@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt';
 
 const helper = {
   createToken(user) {
-    const token = jwt.sign(user,process.env.PRIVATE_KEY,{expiresIn: '24h'});
-    return {token};
+    const token = jwt.sign(user, process.env.PRIVATE_KEY, { expiresIn: '24h' });
+    return { token };
   },
   hashPassword(password) {
     if (password) {
@@ -13,7 +13,7 @@ const helper = {
     return undefined;
   },
   comparePassword(password, hash) {
-    return bcrypt.compareSync(password, hash, (err, res) => res); 
+    return bcrypt.compareSync(password, hash, (err, res) => res);
   },
 
   getToken(req) {
