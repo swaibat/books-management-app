@@ -24,11 +24,19 @@ const UserMiddleware = {
   async getBook(req, res, next) {
     const book = await db.Book.findOne({ where: { email: req.params.id }, raw: true });
     book
-    ? res.status(409).send({status:409, message:'user with email already exists'})
-    :next();
+      ? res.status(409).send({ status: 409, message: 'user with email already exists' })
+      : next();
+  },
+
+  verifyToken(req, res, next) {
+    const token = helpers.getToken(req);
+    if (!token) return res.status(401).send({ status: 401, message: 'provide token to get access' });
+    const userData = helpers.decodeToken(token);
+    if (userData.error) return res.status(401).send({ status: 401, message: userData.error });
+    req.user = userData;
+    next();
   },
 };
-
 
 
 export default UserMiddleware;
