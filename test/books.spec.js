@@ -3,6 +3,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { describe, it } from 'mocha';
 import app from '../index';
+import helper from '../app/helpers';
 
 chai.use(chaiHttp);
 chai.should();
@@ -10,6 +11,7 @@ describe('Books CRUD Ops', () => {
   it('Should create book successfully', (done) => {
     chai.request(app)
       .post('/api/v1/books')
+      .set('Authorization', helper.createToken({ email: 'demo@gmail.com', username: 'demo' }).token)
       .send({
         title: 'Rich Dad Poor Dad',
         author: 'Robert Kiyosaki',
@@ -26,6 +28,7 @@ describe('Books CRUD Ops', () => {
   it('Should create book successfully', (done) => {
     chai.request(app)
       .post('/api/v1/books')
+      .set('Authorization', helper.createToken({ email: 'demo@gmail.com', username: 'demo' }).token)
       .send({
         title: '',
         author: 'Robert Kiyosaki',
@@ -41,6 +44,7 @@ describe('Books CRUD Ops', () => {
   it('Should check if book already exists', (done) => {
     chai.request(app)
       .post('/api/v1/books')
+      .set('Authorization', helper.createToken({ email: 'demo@gmail.com', username: 'demo' }).token)
       .send({
         title: 'Rich Dad Poor Dad',
         author: 'Robert Kiyosaki',
@@ -57,6 +61,7 @@ describe('Books CRUD Ops', () => {
   it('Should update book successfully', (done) => {
     chai.request(app)
       .patch('/api/v1/books/1')
+      .set('Authorization', helper.createToken({ email: 'demo@gmail.com', username: 'demo' }).token)
       .send({
         title: 'Rich Dad Poor Dad 3',
         author: 'Robert Kiyosaki',
@@ -73,6 +78,7 @@ describe('Books CRUD Ops', () => {
   it('Should get all books', (done) => {
     chai.request(app)
       .get('/api/v1/books')
+      .set('Authorization', helper.createToken({ email: 'demo@gmail.com', username: 'demo' }).token)
       .end((err, res) => {
         res.should.have.status(200);
         done();
@@ -81,6 +87,7 @@ describe('Books CRUD Ops', () => {
   it('Should get single book by id', (done) => {
     chai.request(app)
       .get('/api/v1/books/1')
+      .set('Authorization', helper.createToken({ email: 'demo@gmail.com', username: 'demo' }).token)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
@@ -91,6 +98,7 @@ describe('Books CRUD Ops', () => {
   it('Should delete a book', (done) => {
     chai.request(app)
       .delete('/api/v1/books/1')
+      .set('Authorization', helper.createToken({ email: 'demo@gmail.com', username: 'demo' }).token)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
